@@ -1,0 +1,14 @@
+???
+let rec ... and allows for the creation of mutually recusive functions in OCaml. There is no mutual recursion between the strongly connected components. Mutual recursion can increase performance, when compiled correctly, but increases code complexity
+???
+
+...
+frame n+1
+|-----------------------|
+|arguments		|
+|return address		|
+|frame n-1 base pointer	|<- frame n base pointer
+|local variables	|
+|-----------------------|
+frame n-1
+...
