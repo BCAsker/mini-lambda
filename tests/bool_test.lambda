@@ -1,0 +1,35 @@
+func print_int(x);
+func input_int();
+
+func sum(x, y) {
+	return x + y;
+}
+
+func adder(x) {
+	return \(y) -> sum(x, y);
+}
+
+func sub(x, y) {
+	return x - y;
+}
+
+func subber(x) {
+	return \(y) -> sub(x, y);
+}
+
+func id(x){
+     return x;
+}
+
+func giveTrue(){
+     return true;
+}
+
+func main() {
+	x <- input_int();
+	y <- input_int();
+	f <- subber(x);
+	s <- f(y);
+	print_int(s);
+
+}
