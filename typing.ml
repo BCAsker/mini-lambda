@@ -22,6 +22,8 @@ module IdentMap = Map.Make(String)
 type ty
   (* Basic integer type *)
   = TyInt
+  (* Basic boolean type *)
+  | TyBool
   (* Unit type for functions with no return *)
   | TyUnit
   (* Function type *)
@@ -47,6 +49,7 @@ type type_scope
 let rec occurs loc r ty
   = match ty with
     | TyInt -> ()
+    | TyBool -> ()
     | TyUnit -> ()
     | TyArr(params, ret) ->
       occurs loc r ret;
@@ -91,6 +94,7 @@ let new_ty_var () =
 let rec generalise ty
   = match ty with
   | TyInt -> ty
+  | TyBool -> ty
   | TyUnit -> ty
   | TyArr(params, ret) ->
     TyArr(Array.map generalise params, generalise ret)
@@ -106,6 +110,7 @@ let instantiate ty =
   let abs_context = Hashtbl.create 5 in
   let rec loop ty = match ty with
     | TyInt -> ty
+    | TyBool -> ty
     | TyUnit -> ty
     | TyArr(params, ret) ->
       TyArr(Array.map loop params, loop ret)
@@ -167,6 +172,8 @@ let rec check_expr scope expr
     in find_name scope
   | IntExpr(loc, i) ->
     Typed_ast.IntExpr(loc, i), TyInt
+  | BoolExpr(loc, b) ->
+    Typed_ast.BoolExpr(loc, b), TyBool
   | AddExpr(loc, lhs, rhs) ->
     let lhs', ty_lhs = check_expr scope lhs in
     unify loc ty_lhs TyInt;
@@ -244,6 +251,8 @@ let rec find_refs_expr bound acc expr
   | IdentExpr(loc, name) ->
     if List.mem name bound then acc else (loc, name) :: acc
   | IntExpr(_, _) ->
+    acc
+  | BoolExpr(_, _) ->
     acc
   | AddExpr(_, lhs, rhs) ->
     find_refs_expr bound (find_refs_expr bound acc rhs) lhs

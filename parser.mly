@@ -9,6 +9,7 @@ open Ast
 %}
 
 %token <int> INT
+%token <bool> BOOL
 %token <string> IDENT
 %token PLUS
 %token MINUS
@@ -74,5 +75,6 @@ primary_expr:
   | LPAREN e = expr; RPAREN { e }
   | name = IDENT { IdentExpr($startpos, name) }
   | decimal = INT { IntExpr($startpos, decimal) }
+  | boolean = BOOL { BoolExpr($startpos, boolean) }
 
 

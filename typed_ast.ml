@@ -16,6 +16,7 @@ type expr
   | BoundExpr of loc * id
   | ArgExpr of loc * id
   | IntExpr of loc * int
+  | BoolExpr of loc * bool
   | AddExpr of loc * expr * expr
   | MinusExpr of loc * expr * expr
   | LambdaExpr of loc * int * expr array * expr

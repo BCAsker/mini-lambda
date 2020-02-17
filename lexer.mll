@@ -28,9 +28,9 @@ rule token = parse
   | "func" { FUNC }
   | "return" { RETURN }
   | "<-" { BIND }
-  | ['a'-'z' 'A'-'Z' '_'] ['a'-'z' 'A'-'Z' '_' '0'-'9']* {
-    IDENT (Lexing.lexeme lexbuf)
-  }
+  | "true" { BOOL(bool_of_string "true") }
+  | "false" { BOOL(bool_of_string "false") }
+  | ['a'-'z' 'A'-'Z' '_'] ['a'-'z' 'A'-'Z' '_' '0'-'9']* {IDENT (Lexing.lexeme lexbuf)}
   | ['0' - '9']+ as str { INT(int_of_string str) }
   | _ as c {
     let { pos_lnum; pos_cnum; pos_bol; _} = Lexing.lexeme_start_p lexbuf in

@@ -40,6 +40,8 @@ let lower program =
           Ir.GetArg id :: acc
         | IntExpr(_, i) ->
           Ir.ConstInt i :: acc
+        | BoolExpr(_, b) ->
+          Ir.ConstBool b :: acc
         | AddExpr(_, lhs, rhs) ->
           Ir.Add :: lower_expr (lower_expr acc lhs) rhs
         | MinusExpr(_, lhs, rhs) ->

@@ -46,6 +46,13 @@ let compile_closure out { id; num_params; num_locals; name; insts; _ } =
     | ConstInt i ->
       Printf.fprintf out "\tmovq $%d, %%rcx\n" i;
       Printf.fprintf out "\tpushq %%rcx\n"
+    | ConstBool true ->
+      Printf.fprintf out "\tmovq $%d, %%rcx\n" 1;
+      Printf.fprintf out "\tpushq %%rcx\n"
+    | ConstBool false ->
+      Printf.fprintf out "\tmovq $%d, %%rcx\n" 0;
+      Printf.fprintf out "\tpushq %%rcx\n"
+      
     | Closure(i, num_capture) ->
       let size = num_capture * 8 + 8 in
       Printf.fprintf out "\tmovq $%d, %%rcx\n" num_capture;

@@ -47,6 +47,7 @@ let compile_closure out { id; num_params; num_locals; name; insts; _ } =
     | ConstInt i ->
       Printf.fprintf out "\tldr r1, =%d\n" i;
       Printf.fprintf out "\tpush {r1}\n"
+    | ConstBool _ -> ()
     | Closure(i, num_capture) ->
       let size = num_capture * 4 + 4 in
       Printf.fprintf out "\tmov r1, #%d\n" num_capture;

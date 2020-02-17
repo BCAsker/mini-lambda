@@ -27,6 +27,8 @@ type inst
   | SetLocal of int
   (* Pops a constant onto the stack. *)
   | ConstInt of int
+  (* Pushes a constant boolean (false or true) onto the stack. *)
+  | ConstBool of bool
   (* Pops a number of values and pushes a closure capturing them. *)
   | Closure of int * int
   (* Pops two values and pushes their sum. *)
@@ -60,6 +62,8 @@ let print_inst out inst =
   | GetLocal i    -> Printf.fprintf out "\tGetLocal(%d)\n" i
   | SetLocal i    -> Printf.fprintf out "\tSetLocal(%d)\n" i
   | ConstInt i    -> Printf.fprintf out "\tConstInt(%d)\n" i
+  | ConstBool true   -> Printf.fprintf out "\tConstBool(true)\n"
+  | ConstBool false   -> Printf.fprintf out "\tConstBool(false)\n"
   | Closure(i, n) -> Printf.fprintf out "\tClosure(%d, %d)\n" i n
   | Add           -> Printf.fprintf out "\tAdd\n"
   | Minus         -> Printf.fprintf out "\tMinus\n"
