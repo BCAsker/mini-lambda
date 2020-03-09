@@ -69,6 +69,14 @@ let compile_closure out { id; num_params; num_locals; name; insts; _ } =
       Printf.fprintf out "\tpop {r2}\n";
       Printf.fprintf out "\tsub r1, r1, r2\n";
       Printf.fprintf out "\tpush {r1}\n";
+    | Equal ->
+      Printf.fprintf out "\n";
+    | Nequal -> 
+      Printf.fprintf out "\n";
+    | And ->
+      Printf.fprintf out "\n";
+    | Or -> 
+      Printf.fprintf out "\n";
     | Call ->
       Printf.fprintf out "\tpop {r0}\n";
       Printf.fprintf out "\tldr r1, [r0]\n";

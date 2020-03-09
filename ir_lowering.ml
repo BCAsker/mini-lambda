@@ -46,7 +46,15 @@ let lower program =
           Ir.Add :: lower_expr (lower_expr acc lhs) rhs
         | MinusExpr(_, lhs, rhs) ->
           Ir.Minus :: lower_expr (lower_expr acc lhs) rhs
-        | LambdaExpr(_, num_params, env, body) ->
+        | EqualExpr(_, lhs, rhs) ->
+          Ir.Equal :: lower_expr (lower_expr acc lhs) rhs
+        | NequalExpr(_, lhs, rhs) ->
+          Ir.Nequal :: lower_expr (lower_expr acc lhs) rhs
+        | AndExpr(_, lhs, rhs) ->
+          Ir.And :: lower_expr (lower_expr acc lhs) rhs
+        | OrExpr(_, lhs, rhs) ->
+          Ir.Or :: lower_expr (lower_expr acc lhs) rhs
+| LambdaExpr(_, num_params, env, body) ->
           (* Create a new closure from the body. *)
           let id = new_id() in
           let ir_body = Ir.Return :: lower_expr [] body in

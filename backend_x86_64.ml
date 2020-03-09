@@ -70,6 +70,19 @@ let compile_closure out { id; num_params; num_locals; name; insts; _ } =
     | Minus ->
       Printf.fprintf out "\tpopq %%rcx\n";
       Printf.fprintf out "\tsubq %%rcx, (%%rsp)\n"
+    | Equal ->
+      Printf.fprintf out "\tpopq %%rcx\n";
+      Printf.fprintf out "\tcmpq %%rcx\n";
+    | Nequal ->
+      Printf.fprintf out "\tpopq %%rcx\n";
+      Printf.fprintf out "\tcmpq %%rcx\n";
+      Printf.fprintf out "\tnotq %%rcx\n";
+    | And ->
+      Printf.fprintf out "\tpopq %%rcx\n";
+      Printf.fprintf out "\tandq %%rcx, (%%rsp)\n"
+    | Or ->
+      Printf.fprintf out "\tpopq %%rcx\n";
+      Printf.fprintf out "\torq %%rcx, (%%rsp)\n"
     | Call ->
       Printf.fprintf out "\tpopq %%rax\n";
       Printf.fprintf out "\tcallq *(%%rax)\n";

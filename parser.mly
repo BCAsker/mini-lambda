@@ -13,6 +13,10 @@ open Ast
 %token <string> IDENT
 %token PLUS
 %token MINUS
+%token EQUAL
+%token NEQUAL
+%token AND
+%token OR
 %token LPAREN RPAREN LBRACE RBRACE
 %token FUNC
 %token RETURN
@@ -57,6 +61,14 @@ expr:
     { AddExpr($startpos, lhs, rhs) }
   | lhs = expr; MINUS; rhs = unary_expr
     { MinusExpr($startpos, lhs, rhs) }
+  | lhs = expr; EQUAL; rhs = unary_expr
+    { EqualExpr($startpos, lhs, rhs) }
+  | lhs = expr; NEQUAL; rhs = unary_expr
+    { NequalExpr($startpos, lhs, rhs) }
+  | lhs = expr; AND; rhs = unary_expr
+    { AndExpr($startpos, lhs, rhs) }
+  | lhs = expr; OR; rhs = unary_expr
+    { OrExpr($startpos, lhs, rhs) }
 
 unary_expr:
   | LAMBDA

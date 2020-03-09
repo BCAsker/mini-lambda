@@ -17,6 +17,10 @@ rule token = parse
   | eof { EOF }
   | '+' { PLUS }
   | '-' { MINUS }
+  | "==" { EQUAL }
+  | "!=" { NEQUAL }
+  | "&&" { AND }
+  | "||" { OR }
   | '(' { LPAREN }
   | ')' { RPAREN }
   | '{' { LBRACE }

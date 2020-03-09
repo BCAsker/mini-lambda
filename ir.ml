@@ -35,6 +35,14 @@ type inst
   | Add
   (* Pops two values and pushes the second minus the first*)
   | Minus
+  (* Pops two values and pushes true if they are equal, false if not *)
+  | Equal
+  (* Pops two values and pushes false if they are equal, true if not *)
+  | Nequal
+  (* Pops two values and pushes their logical and  *)
+  | And
+  (* Pops two values and pushes their logical or *)
+  | Or
   (* Pops a closure and invokes it. *)
   | Call
   (* Pops a return value and returns. *)
@@ -67,6 +75,10 @@ let print_inst out inst =
   | Closure(i, n) -> Printf.fprintf out "\tClosure(%d, %d)\n" i n
   | Add           -> Printf.fprintf out "\tAdd\n"
   | Minus         -> Printf.fprintf out "\tMinus\n"
+  | Equal           -> Printf.fprintf out "\tEqual\n"
+  | Nequal         -> Printf.fprintf out "\tNequal\n"
+  | And           -> Printf.fprintf out "\tAnd\n"
+  | Or         -> Printf.fprintf out "\tOr\n"
   | Call          -> Printf.fprintf out "\tInvoke\n"
   | Return        -> Printf.fprintf out "\tReturn\n"
   | Pop           -> Printf.fprintf out "\tPop\n"

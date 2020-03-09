@@ -186,6 +186,31 @@ let rec check_expr scope expr
     let rhs', ty_rhs = check_expr scope rhs in
     unify loc ty_rhs TyInt;
     Typed_ast.MinusExpr(loc, lhs', rhs'), TyInt
+  | EqualExpr(loc, lhs, rhs) ->
+    let lhs', ty_lhs = check_expr scope lhs in
+    unify loc ty_lhs TyInt;
+    let rhs', ty_rhs = check_expr scope rhs in
+    unify loc ty_rhs TyInt;
+    Typed_ast.EqualExpr(loc, lhs', rhs'), TyBool
+  | NequalExpr(loc, lhs, rhs) ->
+    let lhs', ty_lhs = check_expr scope lhs in
+    unify loc ty_lhs TyInt;
+    let rhs', ty_rhs = check_expr scope rhs in
+    unify loc ty_rhs TyInt;
+    Typed_ast.NequalExpr(loc, lhs', rhs'), TyBool
+  | AndExpr(loc, lhs, rhs) ->
+    let lhs', ty_lhs = check_expr scope lhs in
+    unify loc ty_lhs TyBool;
+    let rhs', ty_rhs = check_expr scope rhs in
+    unify loc ty_rhs TyBool;
+    Typed_ast.AndExpr(loc, lhs', rhs'), TyBool
+  | OrExpr(loc, lhs, rhs) ->
+    let lhs', ty_lhs = check_expr scope lhs in
+    unify loc ty_lhs TyBool;
+    let rhs', ty_rhs = check_expr scope rhs in
+    unify loc ty_rhs TyBool;
+    Typed_ast.OrExpr(loc, lhs', rhs'), TyBool
+
   | LambdaExpr(loc, params, body) ->
     let args, ty_args = List.fold_left
       (fun (map, ty_args) param ->
@@ -257,6 +282,14 @@ let rec find_refs_expr bound acc expr
   | AddExpr(_, lhs, rhs) ->
     find_refs_expr bound (find_refs_expr bound acc rhs) lhs
   | MinusExpr(_, lhs, rhs) ->
+    find_refs_expr bound (find_refs_expr bound acc rhs) lhs
+  | EqualExpr(_, lhs, rhs) ->
+    find_refs_expr bound (find_refs_expr bound acc rhs) lhs
+  | NequalExpr(_, lhs, rhs) ->
+    find_refs_expr bound (find_refs_expr bound acc rhs) lhs
+  | AndExpr(_, lhs, rhs) ->
+    find_refs_expr bound (find_refs_expr bound acc rhs) lhs
+  | OrExpr(_, lhs, rhs) ->
     find_refs_expr bound (find_refs_expr bound acc rhs) lhs
   | LambdaExpr(_, params, body) ->
     find_refs_expr (List.append params bound) acc body

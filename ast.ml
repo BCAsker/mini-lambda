@@ -14,6 +14,10 @@ type expr
   | BoolExpr of loc * bool
   | AddExpr of loc * expr * expr
   | MinusExpr of loc * expr * expr
+  | EqualExpr of loc * expr * expr
+  | NequalExpr of loc * expr * expr
+  | AndExpr of loc * expr * expr
+  | OrExpr of loc * expr * expr
   | LambdaExpr of loc * string list * expr
   | CallExpr of loc * expr * expr list
 
