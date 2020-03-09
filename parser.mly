@@ -23,6 +23,8 @@ open Ast
 %token ARROW
 %token LAMBDA
 %token BIND
+%token IF
+%token THEN
 %token COMMA
 %token SEMI
 %token EOF
@@ -54,6 +56,7 @@ statement:
   | RETURN expr SEMI { ReturnStmt($startpos, $2) }
   | IDENT BIND expr SEMI { BindStmt($startpos, $1, $3) }
   | expr SEMI { ExprStmt($startpos, $1) }
+  | IF expr THEN expr SEMI { IfStmt($startpos, $2, $4) }
 
 expr:
   | unary_expr { $1 }

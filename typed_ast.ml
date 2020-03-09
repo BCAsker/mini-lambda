@@ -30,6 +30,7 @@ type statement
   = ReturnStmt of loc * expr
   | ExprStmt of loc * expr
   | BindStmt of loc * id * expr
+  | IfStmt of loc * expr * expr
 
 type func =
   { id: id

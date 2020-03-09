@@ -32,6 +32,8 @@ rule token = parse
   | "func" { FUNC }
   | "return" { RETURN }
   | "<-" { BIND }
+  | "if" { IF }
+  | "then" { THEN }
   | "true" { BOOL(bool_of_string "true") }
   | "false" { BOOL(bool_of_string "false") }
   | ['a'-'z' 'A'-'Z' '_'] ['a'-'z' 'A'-'Z' '_' '0'-'9']* {IDENT (Lexing.lexeme lexbuf)}

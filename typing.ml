@@ -266,6 +266,13 @@ let check_statements ret_ty acc scope stats
       let scope' = BindScope(name, nb, ty) :: scope in
       let node = Typed_ast.BindStmt(loc, nb, e') in
       iter (nb + 1, node :: acc) scope' rest
+    | IfStmt(loc, pred, body) :: rest ->
+      let pred', tyPred = check_expr scope pred in
+      unify loc tyPred TyBool;
+      let body' tyBody = check_expr scope pred in
+      unify loc tyBody TyUnit; 
+      let node = Typed_ast.IfStmt(loc, pred', body') in
+      iter (nb, node :: acc) scope rest
     | [] ->
       (nb, acc)
   in iter acc scope stats

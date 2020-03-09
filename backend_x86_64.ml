@@ -51,8 +51,7 @@ let compile_closure out { id; num_params; num_locals; name; insts; _ } =
       Printf.fprintf out "\tpushq %%rcx\n"
     | ConstBool false ->
       Printf.fprintf out "\tmovq $%d, %%rcx\n" 0;
-      Printf.fprintf out "\tpushq %%rcx\n"
-      
+      Printf.fprintf out "\tpushq %%rcx\n"      
     | Closure(i, num_capture) ->
       let size = num_capture * 8 + 8 in
       Printf.fprintf out "\tmovq $%d, %%rcx\n" num_capture;
@@ -98,6 +97,12 @@ let compile_closure out { id; num_params; num_locals; name; insts; _ } =
         Printf.fprintf out "\taddq $%d, %%rsp\n" (8 * num_params);
       Printf.fprintf out "\tpushq %%rdx\n";
       Printf.fprintf out "\tretq\n";
+    | Label ->
+      Printf.fprintf out "\tlab:\n";
+    | Jump ->
+      Printf.fprintf out "\tjmp lab";
+    | CondJump ->
+      Printf.fprintf out "\tjmp lab";
     | Pop ->
       Printf.fprintf out "\tpopq %%rcx\n";
     ) insts;

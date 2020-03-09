@@ -54,7 +54,7 @@ let lower program =
           Ir.And :: lower_expr (lower_expr acc lhs) rhs
         | OrExpr(_, lhs, rhs) ->
           Ir.Or :: lower_expr (lower_expr acc lhs) rhs
-| LambdaExpr(_, num_params, env, body) ->
+        | LambdaExpr(_, num_params, env, body) ->
           (* Create a new closure from the body. *)
           let id = new_id() in
           let ir_body = Ir.Return :: lower_expr [] body in
@@ -83,6 +83,8 @@ let lower program =
           lower_body (Ir.Pop :: lower_expr acc e) rest
         | BindStmt(_, id, e) :: rest ->
           lower_body (Ir.SetLocal id :: lower_expr acc e) rest
+        | IfStmt(_, pred, body) :: rest ->
+          lower_body (Ir.CondJump :: lower_expr (lower_expr acc pred) body :: Ir.label) rest
         | [] ->
           acc
       in

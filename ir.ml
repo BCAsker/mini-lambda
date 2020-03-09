@@ -43,6 +43,12 @@ type inst
   | And
   (* Pops two values and pushes their logical or *)
   | Or
+  (* Pushes a label to the stack *)
+  | Label
+  (* Winds the stack back to a label *)
+  | Jump
+  (* Pops a value and winds stack back to correct label *)
+  | CondJump
   (* Pops a closure and invokes it. *)
   | Call
   (* Pops a return value and returns. *)
@@ -75,10 +81,13 @@ let print_inst out inst =
   | Closure(i, n) -> Printf.fprintf out "\tClosure(%d, %d)\n" i n
   | Add           -> Printf.fprintf out "\tAdd\n"
   | Minus         -> Printf.fprintf out "\tMinus\n"
-  | Equal           -> Printf.fprintf out "\tEqual\n"
-  | Nequal         -> Printf.fprintf out "\tNequal\n"
+  | Equal         -> Printf.fprintf out "\tEqual\n"
+  | Nequal        -> Printf.fprintf out "\tNequal\n"
   | And           -> Printf.fprintf out "\tAnd\n"
-  | Or         -> Printf.fprintf out "\tOr\n"
+  | Or            -> Printf.fprintf out "\tOr\n"
+  | Label         -> Printf.fprintf out "\tCondJump\n"
+  | Jump          -> Printf.fprintf out "\tCondJump\n"
+  | CondJump      -> Printf.fprintf out "\tCondJump\n"
   | Call          -> Printf.fprintf out "\tInvoke\n"
   | Return        -> Printf.fprintf out "\tReturn\n"
   | Pop           -> Printf.fprintf out "\tPop\n"
